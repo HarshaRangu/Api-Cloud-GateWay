@@ -1,0 +1,46 @@
+spring:
+  cloud:
+    gateway:
+      discovery.locator:
+        enabled: true
+        lowerCaseServiceId: true
+      routes:
+      - id: plans-api
+        uri: lb://PLANS-API
+        predicates:
+        - Path=/categories,/getPlans,/plan,/editPlan/{planId},/updatePlan,/deletePlan/{planId},/status-change/{planId}/{status}
+      - id: Reports-api
+        uri: lb://Reports-Api
+        predicates:
+        - Path=/planName,/planStatus,/search,/excel,/pdf
+      - id: userMng-api
+        uri: lb://UserMng-Api
+        predicates:
+        - Path=/user,/activate,/search,/allUsers,/user/{userId},/actStatus/{userId}/{status},/login,/fwtPas/{email}
+      - id: AR-Api
+        uri: lb://Application-Api
+        predicates:
+        - Path=/createAppilcation
+      - id: DC-Api
+        uri: lb://DataCollection-Api
+        predicates:
+        - Path=/case/{appId},/education,/saveIncome,/planSel
+      - id: ED-Api
+        uri: lb://EligibilityDetermination-Api
+        predicates:
+        - Path=/ED/{caseNum}
+      - id: Co-Api
+        uri: lb://Correspodence-Api
+        predicates:
+        - Path=/proccess
+      - id: BI-Api
+        uri: lb://BenfitIssuance-Api
+        predicates:
+        - Path=/file
+           
+               
+  application:
+    name: CLOUD-API-GATEWAY
+server:
+  port: 3333
+  
